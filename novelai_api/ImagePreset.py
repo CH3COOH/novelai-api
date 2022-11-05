@@ -81,7 +81,8 @@ class ImagePreset:
         "strength":         (int, float),
         "scale":            (int, float),
         "steps":            int,
-        "uc":               str
+        "uc":               str,
+        "image":            str
     }
 
     _DEFAULT = {
@@ -96,7 +97,8 @@ class ImagePreset:
         "strength":         0.7,
         "steps":            28,
         "scale":            11,
-        "uc":               ""
+        "uc":               "",
+        "image":            ""
     }
 
     _settings: Dict[str, Any]
@@ -149,6 +151,9 @@ class ImagePreset:
 
         sampler: ImageSampler = settings.pop("sampler")
         settings["sampler"] = sampler.value
+
+        if settings["image"] == "":
+            del settings["image"]
 
         return settings
 

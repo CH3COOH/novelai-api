@@ -1,3 +1,4 @@
+import base64
 from asyncio import run
 
 from boilerplate import API
@@ -37,6 +38,19 @@ async def main():
 
         async for img in api.high_level.generate_image("female, species:human", ImageModel.Furry, preset):
             with open(f"image_3.png", "wb") as f:
+                f.write(img)
+
+        # img2img
+
+        preset["resolution"] = ImageResolution.Normal_Portrait
+        preset["uc_preset"] = UCPreset.Preset_Low_Quality_Bad_Anatomy
+        preset['strength'] = 0.7
+
+        with open('example/example_img2img.png', "rb") as f:
+            preset['image'] = base64.b64encode(f.read()).decode('utf-8')
+
+        async for img in api.high_level.generate_image("1girl", ImageModel.Anime_Full, preset):
+            with open(f"image_4.png", "wb") as f:
                 f.write(img)
 
 run(main())
